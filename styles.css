@@ -93,6 +93,9 @@ h3 {
   background: rgb(1, 15, 75);
   cursor: pointer;
 }
+#current {
+  margin: 10px;
+}
 /* footer */
 footer {
   position: fixed;
