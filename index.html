@@ -14,15 +14,31 @@
       href="https://fonts.googleapis.com/css2?family=DynaPuff&display=swap"
       rel="stylesheet"
     />
-    <script src="scripts.js" defer></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="script.js" defer></script>
   </head>
   <body>
     <a href="index.html"><h1>kółko i krzyżyk 2</h1></a>
     <div id="menu">
+      <h2>Witaj w grze!</h2>
+      <h3>Wybierz:</h3>
+      <div id="choose">
+        <div id="x" class="type">x</div>
+        <div id="o" class="type">o</div>
+      </div>
       <div id="play">Graj</div>
     </div>
     <div id="container">
-      <div id="dialog">Jesteś: "X"<br />Wynik:</div>
+      <div id="dialog">
+        Jesteś:
+        <div id="typ"></div>
+      </div>
+      <div id="wynik">Wynik:</div>
       <div id="game">
         <div id="pole1" class="field"></div>
         <div id="pole2" class="field"></div>
