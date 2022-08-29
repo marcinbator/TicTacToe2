@@ -4,30 +4,17 @@ function change() {
 }
 function choose(typ) {
   player.type = typ;
+  if (player.type == "o") {
+    si.type = "x";
+  } else {
+    si.type = "o";
+  }
   game();
 }
-function cover(number) {
-  if (player.round == 1) {
-    if ($("#pole" + number).text != x && $("#pole" + number).text != "o") {
-      console.log("nie");
-      if (player.type == "o") {
-        $("#pole" + number).text("o");
-      } else {
-        $("#pole" + number).text("x");
-      }
-    } else {
-      console.log("tak");
-      $("#current").text("Pole " + number + " jest już zajęte!");
-      setTimeout(function () {
-        $("#current").text("");
-      }, 1000);
-    }
-  } else {
-    $("#current").text("Czekaj! Kolej na przeciwnika");
-    setTimeout(function () {
-      $("#current").text("");
-    }, 1000);
-  }
+function random(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 //SELECTOR
 $("#x").on("click", function () {
@@ -47,37 +34,179 @@ var si = {
   score: 0,
   round: 0,
 };
-var field1 = {
-  value: "none",
-};
-var field2 = {
-  value: "none",
-};
-var field3 = {
-  value: "none",
-};
-var field4 = {
-  value: "none",
-};
-var field5 = {
-  value: "none",
-};
-var field6 = {
-  value: "none",
-};
-var field7 = {
-  value: "none",
-};
-var field8 = {
-  value: "none",
-};
-var field9 = {
-  value: "none",
-};
-
+var fields = [
+  {
+    value: "none",
+  },
+  {
+    value: "none",
+  },
+  {
+    value: "none",
+  },
+  {
+    value: "none",
+  },
+  {
+    value: "none",
+  },
+  {
+    value: "none",
+  },
+  {
+    value: "none",
+  },
+  {
+    value: "none",
+  },
+  {
+    value: "none",
+  },
+];
 //////////GAME
 function game() {
-  ////////MENU
+  function clear() {
+    for (i = 0; i < 9; i++) {
+      fields[i].value = "none";
+      var a = i + 1;
+      $("#pole" + a).text("");
+    }
+  }
+  function light(p1, p2, p3) {
+    $("#pole" + p1).css("color", "red");
+    $("#pole" + p2).css("color", "red");
+    $("#pole" + p3).css("color", "red");
+    setTimeout(function () {
+      $("#pole" + p1).css("color", "white");
+      $("#pole" + p2).css("color", "white");
+      $("#pole" + p3).css("color", "white");
+    }, 900);
+  }
+  function end() {
+    if (
+      fields[0].value == fields[1].value &&
+      fields[1].value == fields[2].value &&
+      fields[0].value != "none"
+    ) {
+      $("#current").text("Wygrywa " + fields[0].value + "!!!");
+      setTimeout(function () {
+        $("#current").text("");
+      }, 2000);
+      light(1, 2, 3);
+      setTimeout(clear, 900);
+    } else if (
+      fields[3].value == fields[4].value &&
+      fields[4].value == fields[5].value &&
+      fields[3].value != "none"
+    ) {
+      $("#current").text("Wygrywa " + fields[3].value + "!!!");
+      setTimeout(function () {
+        $("#current").text("");
+      }, 2000);
+      light(4, 5, 6);
+      setTimeout(clear, 900);
+    } else if (
+      fields[6].value == fields[7].value &&
+      fields[7].value == fields[8].value &&
+      fields[6].value != "none"
+    ) {
+      $("#current").text("Wygrywa " + fields[6].value + "!!!");
+      setTimeout(function () {
+        $("#current").text("");
+      }, 2000);
+      light(7, 8, 9);
+      setTimeout(clear, 900);
+    } else if (
+      fields[0].value == fields[3].value &&
+      fields[3].value == fields[6].value &&
+      fields[6].value != "none"
+    ) {
+      $("#current").text("Wygrywa " + fields[0].value + "!!!");
+      setTimeout(function () {
+        $("#current").text("");
+      }, 2000);
+      light(1, 4, 7);
+      setTimeout(clear, 900);
+    } else if (
+      fields[1].value == fields[4].value &&
+      fields[4].value == fields[7].value &&
+      fields[1].value != "none"
+    ) {
+      $("#current").text("Wygrywa " + fields[1].value + "!!!");
+      setTimeout(function () {
+        $("#current").text("");
+      }, 2000);
+      light(2, 5, 8);
+      setTimeout(clear, 900);
+    } else if (
+      fields[2].value == fields[5].value &&
+      fields[5].value == fields[8].value &&
+      fields[2].value != "none"
+    ) {
+      $("#current").text("Wygrywa " + fields[2].value + "!!!");
+      setTimeout(function () {
+        $("#current").text("");
+      }, 2000);
+      light(3, 6, 9);
+      setTimeout(clear, 900);
+    } else if (
+      fields[0].value == fields[4].value &&
+      fields[4].value == fields[8].value &&
+      fields[0].value != "none"
+    ) {
+      $("#current").text("Wygrywa " + fields[0].value + "!!!");
+      setTimeout(function () {
+        $("#current").text("");
+      }, 2000);
+      light(1, 5, 9);
+      setTimeout(clear, 900);
+    } else if (
+      fields[2].value == fields[4].value &&
+      fields[4].value == fields[6].value &&
+      fields[6].value != "none"
+    ) {
+      $("#current").text("Wygrywa " + fields[6].value + "!!!");
+      setTimeout(function () {
+        $("#current").text("");
+      }, 2000);
+      light(3, 5, 7);
+      setTimeout(clear, 900);
+    } else {
+      var howmany = 0;
+      for (i = 0; i < 9; i++) {
+        if (fields[i].value != "none") {
+          howmany++;
+        }
+      }
+      if (howmany == 9) {
+        $("#current").text("Remis!");
+        setTimeout(function () {
+          $("#current").text("");
+        }, 800);
+        setTimeout(clear, 1000);
+      }
+    }
+  }
+  function whostarts() {
+    var nr = random(1, 2);
+    if (nr == 1) {
+      player.round = 1;
+      si.round = 0;
+      $("#current").text("Zaczynasz!");
+      setTimeout(function () {
+        $("#current").text("");
+      }, 2000);
+    } else {
+      player.round = 0;
+      si.round = 1;
+      simove();
+      $("#current").text("Zaczyna przeciwnik.");
+      setTimeout(function () {
+        $("#current").text("");
+      }, 2000);
+    }
+  }
+  setTimeout(whostarts(), 1000);
   if (player.type != "none") {
     $("#play").on("click", change);
     $("#play").keypress(change);
@@ -110,6 +239,56 @@ function game() {
         $(this).css("transform", "scale(1.0)");
       }
     );
+  }
+  function cover(number) {
+    if (player.round == 1) {
+      if (fields[number - 1].value == "none") {
+        if (player.type == "o") {
+          $("#pole" + number).text("o");
+          fields[number - 1].value = "o";
+        } else {
+          $("#pole" + number).text("x");
+          fields[number - 1].value = "x";
+        }
+        setTimeout(end, 1000);
+        player.round = 0;
+        si.round = 1;
+        end();
+        simove();
+      } else {
+        $("#current").text("Pole " + number + " jest już zajęte!");
+        setTimeout(function () {
+          $("#current").text("");
+        }, 1000);
+      }
+    } else {
+      $("#current").text("Czekaj! Kolej na przeciwnika");
+      setTimeout(function () {
+        $("#current").text("");
+      }, 1000);
+    }
+  }
+  function simove() {
+    var found = 0;
+    while (found != 1) {
+      var num = random(0, 8);
+      number1 = num + 1;
+      if (fields[num].value == "none") {
+        setTimeout(function () {
+          if (si.type == "o") {
+            $("#pole" + number1).text("o");
+            fields[num].value = "o";
+          } else {
+            $("#pole" + number1).text("x");
+            fields[num].value = "x";
+          }
+          end();
+        }, 1000);
+        player.round = 1;
+        si.round = 0;
+        found = 1;
+      }
+    }
   }
   ////////PLAYERTYPE
   $("#typ").text(" " + player.type);

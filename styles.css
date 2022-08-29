@@ -88,6 +88,10 @@ h3 {
   width: 100px;
   height: 100px;
   background: rgb(0, 9, 50);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
 }
 .field:hover {
   background: rgb(1, 15, 75);
