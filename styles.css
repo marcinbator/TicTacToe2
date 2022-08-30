@@ -74,8 +74,10 @@ h3 {
   font-size: 20px;
   margin: 20px 0;
 }
-#wynik {
+#wynik1 {
   margin-bottom: 20px;
+  display: flex;
+  column-gap: 5px;
 }
 #game {
   display: grid;

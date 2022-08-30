@@ -34,37 +34,22 @@ var si = {
   score: 0,
   round: 0,
 };
-var fields = [
-  {
-    value: "none",
-  },
-  {
-    value: "none",
-  },
-  {
-    value: "none",
-  },
-  {
-    value: "none",
-  },
-  {
-    value: "none",
-  },
-  {
-    value: "none",
-  },
-  {
-    value: "none",
-  },
-  {
-    value: "none",
-  },
-  {
-    value: "none",
-  },
-];
+var fields = [];
+for (i = 0; i < 9; i++) {
+  fields[i] = { value: "none" };
+}
 //////////GAME
 function game() {
+  var score1 = 0;
+  var score2 = 0;
+  function score(who) {
+    if (who == "player") {
+      score1++;
+    } else {
+      score2++;
+    }
+    $("#wynik").text(" " + score1 + " : " + score2);
+  }
   function clear() {
     for (i = 0; i < 9; i++) {
       fields[i].value = "none";
@@ -82,108 +67,94 @@ function game() {
       $("#pole" + p3).css("color", "white");
     }, 900);
   }
-  function end() {
-    if (
-      fields[0].value == fields[1].value &&
-      fields[1].value == fields[2].value &&
-      fields[0].value != "none"
-    ) {
-      $("#current").text("Wygrywa " + fields[0].value + "!!!");
-      setTimeout(function () {
-        $("#current").text("");
-      }, 2000);
-      light(1, 2, 3);
-      setTimeout(clear, 900);
-    } else if (
-      fields[3].value == fields[4].value &&
-      fields[4].value == fields[5].value &&
-      fields[3].value != "none"
-    ) {
-      $("#current").text("Wygrywa " + fields[3].value + "!!!");
-      setTimeout(function () {
-        $("#current").text("");
-      }, 2000);
-      light(4, 5, 6);
-      setTimeout(clear, 900);
-    } else if (
-      fields[6].value == fields[7].value &&
-      fields[7].value == fields[8].value &&
-      fields[6].value != "none"
-    ) {
-      $("#current").text("Wygrywa " + fields[6].value + "!!!");
-      setTimeout(function () {
-        $("#current").text("");
-      }, 2000);
-      light(7, 8, 9);
-      setTimeout(clear, 900);
-    } else if (
-      fields[0].value == fields[3].value &&
-      fields[3].value == fields[6].value &&
-      fields[6].value != "none"
-    ) {
-      $("#current").text("Wygrywa " + fields[0].value + "!!!");
-      setTimeout(function () {
-        $("#current").text("");
-      }, 2000);
-      light(1, 4, 7);
-      setTimeout(clear, 900);
-    } else if (
-      fields[1].value == fields[4].value &&
-      fields[4].value == fields[7].value &&
-      fields[1].value != "none"
-    ) {
-      $("#current").text("Wygrywa " + fields[1].value + "!!!");
-      setTimeout(function () {
-        $("#current").text("");
-      }, 2000);
-      light(2, 5, 8);
-      setTimeout(clear, 900);
-    } else if (
-      fields[2].value == fields[5].value &&
-      fields[5].value == fields[8].value &&
-      fields[2].value != "none"
-    ) {
-      $("#current").text("Wygrywa " + fields[2].value + "!!!");
-      setTimeout(function () {
-        $("#current").text("");
-      }, 2000);
-      light(3, 6, 9);
-      setTimeout(clear, 900);
-    } else if (
-      fields[0].value == fields[4].value &&
-      fields[4].value == fields[8].value &&
-      fields[0].value != "none"
-    ) {
-      $("#current").text("Wygrywa " + fields[0].value + "!!!");
-      setTimeout(function () {
-        $("#current").text("");
-      }, 2000);
-      light(1, 5, 9);
-      setTimeout(clear, 900);
-    } else if (
-      fields[2].value == fields[4].value &&
-      fields[4].value == fields[6].value &&
-      fields[6].value != "none"
-    ) {
-      $("#current").text("Wygrywa " + fields[6].value + "!!!");
-      setTimeout(function () {
-        $("#current").text("");
-      }, 2000);
-      light(3, 5, 7);
-      setTimeout(clear, 900);
-    } else {
-      var howmany = 0;
+  function end(who) {
+    var sets = [
+      {
+        v1: 0,
+        v2: 1,
+        v3: 2,
+      },
+      {
+        v1: 3,
+        v2: 4,
+        v3: 5,
+      },
+      {
+        v1: 6,
+        v2: 7,
+        v3: 8,
+      },
+      {
+        v1: 0,
+        v2: 3,
+        v3: 6,
+      },
+      {
+        v1: 1,
+        v2: 4,
+        v3: 7,
+      },
+      {
+        v1: 2,
+        v2: 5,
+        v3: 8,
+      },
+      {
+        v1: 0,
+        v2: 4,
+        v3: 8,
+      },
+      {
+        v1: 2,
+        v2: 4,
+        v3: 6,
+      },
+    ];
+    var ifwin;
+    for (i = 0; i < 8; i++) {
+      if (
+        fields[sets[i].v1].value == fields[sets[i].v2].value &&
+        fields[sets[i].v2].value == fields[sets[i].v3].value &&
+        fields[sets[i].v1].value != "none"
+      ) {
+        $("#current").text("Wygrywa " + fields[sets[i].v1].value + "!!!");
+        ifwin = 1;
+        if (fields[sets[i].v1].value == player.type) {
+          score("player");
+        } else {
+          score("si");
+        }
+        setTimeout(function () {
+          $("#current").text("");
+        }, 2000);
+        light(sets[i].v1 + 1, sets[i].v2 + 1, sets[i].v3 + 1);
+        setTimeout(clear, 900);
+        setTimeout(whostarts, 900);
+        break;
+      }
+    }
+    if (ifwin != 1) {
+      var ile = 0;
       for (i = 0; i < 9; i++) {
         if (fields[i].value != "none") {
-          howmany++;
+          ile++;
         }
       }
-      if (howmany == 9) {
+      if (ile == 9) {
         $("#current").text("Remis!");
         setTimeout(function () {
           $("#current").text("");
-        }, 800);
-        setTimeout(clear, 1000);
+        }, 2000);
+        for (i = 0; i < 9; i++) {
+          var a = i + 1;
+          fields[i].value = "none";
+          $("#pole" + a).text("");
+        }
+        whostarts();
+      } else {
+        if (who != "si") {
+          simove();
+        }
       }
     }
   }
@@ -250,11 +221,9 @@ function game() {
           $("#pole" + number).text("x");
           fields[number - 1].value = "x";
         }
-        setTimeout(end, 1000);
         player.round = 0;
         si.round = 1;
-        end();
-        simove();
+        end("player");
       } else {
         $("#current").text("Pole " + number + " jest już zajęte!");
         setTimeout(function () {
@@ -282,10 +251,11 @@ function game() {
             $("#pole" + number1).text("x");
             fields[num].value = "x";
           }
-          end();
+          player.round = 1;
+          si.round = 0;
+          end("si");
         }, 1000);
-        player.round = 1;
-        si.round = 0;
+
         found = 1;
       }
     }
