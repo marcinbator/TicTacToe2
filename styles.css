@@ -19,7 +19,7 @@ a {
 }
 h1 {
   text-align: center;
-  padding: 40px;
+  padding: 10px 40px;
   font-size: 50px;
   text-shadow: 5px 5px rgb(3, 24, 116);
   background: linear-gradient(to bottom, rgb(1, 11, 54), rgb(3, 24, 116));
