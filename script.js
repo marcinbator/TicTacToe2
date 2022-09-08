@@ -22,7 +22,7 @@ function random(min, max) {
 }
 //
 //Menu
-////Functions
+////MenuFunctions
 function choose(typ) {
   player.type = typ;
   if (player.type == "o") {
@@ -70,7 +70,7 @@ function change() {
   $("#container").css("display", "flex");
 }
 ////
-////StartInstructions
+////MenuStartInstructions
 $("#x").on("click", function () {
   choose("x");
 });
@@ -81,7 +81,7 @@ $("#o").on("click", function () {
 //
 //Game
 function game() {
-  ////Objects
+  ////GameObjects
   var sets = [
     {
       v1: 0,
@@ -125,7 +125,7 @@ function game() {
     },
   ];
   ////
-  ////Functions
+  ////GameFunctions
   function whostarts() {
     var nr = random(1, 2);
     if (nr == 1) {
@@ -279,7 +279,7 @@ function game() {
     }
   }
   ////
-  ////StartInstructions
+  ////GameStartInstructions
   var score1 = 0;
   var score2 = 0;
   setTimeout(whostarts(), 1000);
